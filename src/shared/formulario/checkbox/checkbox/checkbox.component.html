@@ -1,0 +1,7 @@
+
+<form class="flex flex-col mt-3"  [formGroup]="form">
+  <span *ngIf="label" class=" not-italic  text-xl font-semibold mb-[1rem]">{{label }}</span>
+
+    <p-checkbox [binary]="true" [formControlName]="formControlName" [label]="placeholder" [inputId]="placeholder"></p-checkbox>
+
+</form>

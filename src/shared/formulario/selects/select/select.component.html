@@ -1,0 +1,39 @@
+<form [formGroup]="form" class="relative mt-5 generic-select">
+  @if (label){
+  <span
+    class="mb-1 not-italic font-medium text-lg flex items-center text-gray-2">{{label}}</span>
+  }
+
+  <div [ngClass]="mostrarToogle ? 'grid grid-cols-12 ' : 'flex'" class="items-center gap-3">
+    @if(mostrarToogle){
+    <p-inputSwitch class="col-span-2" [(ngModel)]="inicialToogle" (onChange)="alterarToogle($event.checked)"
+      [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+    }
+    <span class="p-float-label col-span-10 w-full">
+      <p-dropdown  appendTo="body" autoAjusteWidth [inputId]="formControlName" scrollHeight="150px" [options]="options"
+        [formControlName]="formControlName" optionLabel="label" optionValue="value">
+        <ng-template  let-item pTemplate="item" >
+          <div tooltipPosition="bottom" [pTooltip]="item.label" class="w-full h-full px-1 flex align-items-center gap-2">
+            <div  class="text-overflow">{{ item.label }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
+      <label for="{{ formControlName }}" class="text-gray-3 a">{{
+        placeholder
+        }}</label>
+    </span>
+
+  </div>
+
+  @if (form.get(formControlName)?.hasError('required') && (form.get(formControlName)?.touched
+  || form.get(formControlName)?.dirty)){
+  <small class="text-c-error animacao font-bold absolute right-0">
+    {{ "Campo requerido" }}</small>
+  } @if(form.get(formControlName)?.errors &&
+  !form.get(formControlName)?.hasError('required')){
+  <small class="text-c-error animacao font-bold absolute right-0">
+    {{ "Campo inválido" }}
+  </small>
+  }
+</form>

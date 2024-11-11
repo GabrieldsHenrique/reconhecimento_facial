@@ -1,0 +1,35 @@
+<form [formGroup]="form" class="mt-5" >
+  @if (label){
+    <span class="mb-1 not-italic font-medium text-lg flex items-center text-gray-2">{{label}}</span>
+    }
+
+
+  <div class="p-inputgroup w-full">
+    <span class="p-float-label w-full">
+      <input
+      [(ngModel)]="selectedColor"
+        id="{{formControlName}}" type="text" pInputText [formControlName]="formControlName"
+        [ngClass]="{
+          'ng-invalid ng-dirty ': form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty)
+        }"
+      />
+
+      <label for="{{formControlName}}" class="text-gray-3 a">{{
+        placeholder
+      }}</label>
+    </span>
+    <span class="w-[3.6rem]">
+      <p-colorPicker class=""
+      [formControlName]="formControlName" [(ngModel)]="selectedColor">
+      </p-colorPicker>
+    </span>
+  </div>
+
+  <small
+    class="text-c-error-1 font-bold absolute"
+    *ngIf="form.get(formControlName)?.errors && (form.get(formControlName)?.touched || form.get(formControlName)?.dirty) && !form.get(formControlName)?.hasError('pattern')"
+  >
+    {{ "Cor invalida" }}
+    </small>
+</form>
+

@@ -1,0 +1,27 @@
+<div class="w-screen h-screen flex  bg-gradient-to-b overflow-x-hidden  from-slate-200/70 from-40%  to-primary-color-2/20 relative p-6 lg:p-12 gap-14 externo">
+  <div class="absolute opacity-10 z-[5] top-0 left-0 h-[20rem] w-[20rem] bg-primary-color blur-3xl rounded-full"></div>
+  <div class="absolute opacity-10 z-[5] bottom-0 left-1/2 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full"></div>
+  <div class="absolute opacity-10 z-[5] top-10 right-24 h-[15rem] w-[15rem] bg-primary-color blur-3xl rounded-full"></div>
+  <div class="absolute opacity-10 z-[5] bottom-0 left-1/2 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full"></div>
+  <div class="absolute opacity-10 z-[5] bottom-10 left-10 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full"></div>
+
+    <div class="w-full lg:w-1/2 flex flex-col gap-4 animacao justify-center rounded-xl relative z-10">
+      <router-outlet></router-outlet>
+   </div>
+
+   @if(slides){
+    <swiper-container class="w-1/2 h-full max-lg:hidden animacao" loop="true" effect="flip" flip-effect-slide-shadows="false" flip-effect-shadow="true" grab-cursor="true"   autoplay-delay="3500" autoplay-disable-on-interaction="false">
+      @for(slide of slides; track $index ){
+      <swiper-slide class="h-full  w-full flex justify-center items-center">
+        <div class="bg-primary-color/10 3xl:max-h-[44rem] 4xl:max-h-[49.5rem] border-2 border-primary-color-3/50 rounded-xl shadow-md  flex flex-col items-center justify-center p-10 h-[95%]">
+
+            <img [src]="slide.imagem" alt="" class="h-[26rem] 3xl:h-[28rem] 4xl:h-[32rem] w-full">
+            <span class="text-center text-[1.9rem] 3xl:text-4xl 4xl:text-[2.6rem] mb-4 font-semibold uppercase">{{slide.titulo}}</span>
+            <span class="text-center text-xl font-light -mt-2">{{slide.descricao}}</span>
+         </div>
+      </swiper-slide>
+      }
+
+    </swiper-container>
+  }
+</div>

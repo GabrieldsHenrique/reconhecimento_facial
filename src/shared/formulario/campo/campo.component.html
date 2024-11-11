@@ -1,0 +1,73 @@
+<form [formGroup]="form">
+  @switch (type){
+
+  @case ('text'){
+  <app-input-text [formControlName]="formControlName" [placeholder]="placeholder" [form]="form" [label]="label"
+    [mostrarToogle]="mostrarToogle" [mask]="mask"></app-input-text>
+  }
+
+  @case ('textarea'){
+    <app-input-textarea [formControlName]="formControlName" [placeholder]="placeholder" [form]="form" [label]="label"
+      [mostrarToogle]="mostrarToogle" [rows]="rows"></app-input-textarea>
+  }
+
+  @case ('cep'){
+  <app-input-cep [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-input-cep>
+  }
+
+  @case ('select'){ @if (options){
+  <app-select [formControlName]="formControlName" [form]="form" [options]="options" [label]="label"
+    [placeholder]="placeholder" [mostrarToogle]="mostrarToogle"></app-select>
+  } }
+
+  @case ('estado'){
+  <app-select-estado [formControlName]="formControlName" [form]="form" [placeholder]="placeholder"></app-select-estado>
+  }
+
+  @case ('date'){
+  <app-input-date [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-input-date>
+  }
+
+  @case ('password') {
+  <app-input-password [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-input-password>
+  }
+
+  @case ('toogle'){
+  <app-toggle [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-toggle>
+  }
+
+  @case ('checkbox') {
+  <app-checkbox [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-checkbox>
+  }
+
+  @case ('codigos') {
+  <app-input-codigos [formControlName]="formControlName" [form]="form" [label]="label"
+    [quantidade]="quantidadeCodigos!"></app-input-codigos>
+  }
+
+
+
+  @case ('numero'){
+  <app-input-numero [formControlName]="formControlName" [label]="label" [form]="form" [suffix]="suffix" [prefix]="prefix" [min]="min" [max]="max"
+    [placeholder]="placeholder" [mostrarToogle]="mostrarToogle" [maxCasaDecimais]="maxCasaDecimais ? maxCasaDecimais : 2" [minCasaDecimais]="minCasaDecimais"></app-input-numero>
+  }
+
+
+
+  @case ('cor'){
+  <app-input-color [formControlName]="formControlName" [placeholder]="placeholder" [form]="form"
+    [label]="label"></app-input-color>
+  }
+
+
+  @case ('radio-button') {
+    <app-radio-button [formControlName]="formControlName" [form]="form" [placeholder]="placeholder" [options]="options!" [class]="class"></app-radio-button>
+  }
+
+  }
+</form>

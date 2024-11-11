@@ -1,0 +1,37 @@
+<div class="w-full flex flex-col gap-4 animacao ">
+  <div class="flex flex-col justify-center items-center">
+    <span class="text-center font-semibold text-[3.2rem] md:text-[2.8rem] mb-[-10px] lg:mb-0 lg:text-6xl 3xl:text-[4rem] 4xl:text-7xl "> <span class="max-md:hidden ">{{ "Seja bem vindo!" }}</span> <span class="md:hidden">Bem vindo!</span></span>
+    <span class="text-base lg:text-lg 4xl:text-xl text-gray-3 ">{{ "Faça login na sua conta." }}</span>
+  </div>
+
+  <form [formGroup]="form" class="w-full gap-4">
+    @for(linha of estrutura; track $index ){
+    <div [class]="linha.className">
+      @for(campo of linha.linha; track $index ){
+      <div [class]="campo.className">
+        <app-campo [type]="campo.type" [formControlName]="campo.formControlName" [placeholder]="campo.placeholder"
+          [form]="form" [options]="campo.options" [mask]="campo.mask" [label]="campo.label"></app-campo>
+      </div>
+      }
+    </div>
+    }
+  </form>
+
+  <div class="flex justify-end w-full mb-[-1rem] mt-[-0.2rem]">
+    <span role="button" [routerLink]="'/esqueceu-senha'" class=" font-medium text-sm hover:text-primary-color-3 transition-colors underline">{{ "Esqueceu sua senha?" }}</span>
+  </div>
+
+
+  <div class="w-full 3xl:text-lg 4xl:text-xl">
+    <button (click)="login();" [disabled]="form.invalid" class="w-full mt-3 primary-button py-3">
+      <span>{{ "ACESSAR" }}</span>
+    </button>
+
+    <button [routerLink]="'/cadastrar'" class="mt-3 w-full secondary-button py-3">
+      <span>{{ "CADASTRE-SE" }}</span>
+    </button>
+  </div>
+
+  <div class="w-full flex justify-center"><img src="assets/logo.png" class="max-w-[30rem] max-h-[7rem] mt-4 drop-shadow-lg" alt="" /></div>
+
+</div>

@@ -1,0 +1,7 @@
+<form [formGroup]="form" class="mt-5 relative">
+  @if(label){
+  <h1 class="text-sm text-primary-color-2 mb-1">{{label}}</h1>
+  }
+  <p-inputOtp [formControlName]="formControlName" [length]="quantidade" />
+
+</form>

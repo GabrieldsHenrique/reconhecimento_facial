@@ -1,0 +1,30 @@
+<form class=" mt-5 relative" [formGroup]="form">
+  <span class="p-float-label">
+    <p-dropdown
+    appendTo="body"
+      autoAjusteWidth
+      [disabled]="form.get(formControlName)!.disabled"
+      [inputId]="formControlName"
+      [options]="estadoList"
+      [formControlName]="formControlName"
+      scrollHeight="150px"
+      optionLabel="label"
+      optionValue="value"
+    ></p-dropdown>
+
+    <label for="{{ formControlName }}" class="text-gray-3 a">{{
+      placeholder
+    }}</label>
+  </span>
+  @if ( form.get(formControlName)?.errors && (form.get(formControlName)?.touched
+  || form.get(formControlName)?.dirty)){
+  <small class="text-c-error animacao font-bold absolute right-0">
+    {{ "Campo requerido" }}</small
+  >
+  }
+
+  @if(form.get(formControlName)?.errors && !form.get(formControlName)?.hasError('required')){
+    <small class="text-c-error animacao font-bold absolute right-0 ">
+    {{'Campo inválido'}} </small>
+  }
+</form>

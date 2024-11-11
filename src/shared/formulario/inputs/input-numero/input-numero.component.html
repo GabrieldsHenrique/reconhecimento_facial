@@ -1,0 +1,32 @@
+<form [formGroup]="form" class="mt-5 relative">
+    @if (label){
+    <span class="mb-1 not-italic font-medium text-lg flex items-center text-gray-2">{{ label }}</span>
+    }
+
+
+    <div class="flex items-center gap-3">
+        @if(mostrarToogle){
+        <p-inputSwitch [(ngModel)]="inicialToogle" (onChange)="alterarToogle($event.checked)" [ngModelOptions]="{standalone: true}"></p-inputSwitch>
+        }
+
+        <span class="p-float-label w-full">
+            <p-inputNumber [id]="formControlName" [formControlName]="formControlName" inputId="integeronly" [showButtons]="true" [min]="min" [max]="max"
+                [prefix]="prefix" [suffix]="suffix" [minFractionDigits]="minCasaDecimais"  [maxFractionDigits]="maxCasaDecimais"></p-inputNumber>
+
+            <label for="{{ formControlName }}" class="text-gray-3 a">{{
+                placeholder
+                }}</label>
+        </span>
+    </div>
+
+    @if( form.get(formControlName)?.hasError('required') &&
+    (form.get(formControlName)?.touched || form.get(formControlName)?.dirty) ){
+    <small class="text-c-error animacao font-bold absolute right-0">
+        {{ "Campo requerido" }}</small>
+    } @if(form.get(formControlName)?.errors &&
+    !form.get(formControlName)?.hasError('required')){
+    <small class="text-c-error animacao font-bold absolute right-0">
+        {{ "Campo inválido" }}
+    </small>
+    }
+</form>
