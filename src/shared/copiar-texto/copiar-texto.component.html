@@ -1,0 +1,28 @@
+<div
+  class="w-fit max-w-[100%] overflow-hidden transition-all overflow-ellipsis whitespace-nowrap"
+>
+  @if(texto){ @if(iconeCopiar){
+  <i class="ph ph-copy-simple float-right text-primary-color ml-1"></i>
+  }
+
+  <p
+    role="button"
+    (mouseenter)="iconeCopiar = true"
+    (mouseleave)="iconeCopiar = false"
+    [ngClass]="classe"
+    [pTooltip]="texto"
+    tooltipPosition="bottom"
+    class="hover:text-primary-color font-light overflow-hidden transition-all overflow-ellipsis whitespace-nowrap"
+  >
+    {{ texto }}
+  </p>
+  }
+</div>
+<p-toast [life]="1000" position="bottom-center" key="copiar">
+  <ng-template let-message pTemplate="message">
+    <div class="font-light text-base flex gap-1 items-center">
+      <i class="ph ph-copy-simple text-lg text-primary-color"></i>
+      {{ message.summary }}
+    </div>
+  </ng-template>
+</p-toast>

@@ -1,0 +1,119 @@
+@if(data?.content?.length > 0){
+<div class="card shadow-sm px-6 py-2 bg-white  font-light">
+
+  <p-table [resizableColumns]="true" [lazy]="true" [value]="data?.content" [scrollable]="true" [customSort]="true"
+    [(rows)]="rows" [(first)]="first" scrollHeight="30rem" [tableStyle]="{'min-width': '60rem'}"
+    currentPageReportTemplate='Mostrando {{first+1}} até {{first === 0 ? data.content.length : first + data.content.length}} do total de {{data.totalElements}} itens'
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5, 10, 25, 100]" [paginator]="paginator" [pageLinks]="3"
+    locale="pt-BR" [totalRecords]="data.totalElements" (onLazyLoad)="loadCarsLazy($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        @if(menuAction){
+        <th [ngStyle]="{ width:'3rem'}">
+          <button class="flex justify-center items-center invisible ">
+            <i class="ph ph-list text-2xl text-gray-3"></i>
+          </button>
+        </th>
+        }
+
+        @for (column of columns; track $index ) {
+        <th [pSortableColumn]="column.variavel ? column.variavel : ''" [pSortableColumnDisabled]="!column.ordenar"
+          [ngStyle]="{ width: column.width, maxWidth: column.width }">
+          <div class="flex items-center">
+            @if(column.name){
+            <span class="uppercase max-md:text-xs">{{ column.name }}</span>
+            }
+
+            @if(column.ordenar){
+            <p-sortIcon [field]="column.variavel ? column.variavel : ''"></p-sortIcon>
+            }
+          </div>
+        </th>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-data let-i="rowIndex">
+      <tr class="h-full w-full text-center text-gray-3">
+
+        @if(menuAction){
+        <td style="width: 3rem;">
+          <button class="flex justify-center items-center"
+            (click)="op.toggle($event); itemSelecionado = verificaCaminho(data, data.variavel)">
+            <i class="ph ph-list text-2xl text-gray-3"></i>
+          </button>
+        </td>
+        }
+
+        @for (column of columns; track $index ) {
+
+        @if ( !column.condicional ||
+        column.condicional.condicao === verificaCaminho(data,
+        column.condicional.variavel) ) {
+        <td [ngClass]="column.class" class="text-overflow" [ngStyle]="{ width: column.width, maxWidth: column.width }">
+          @switch (column.type) {
+          @case ("text") {
+          <app-copiar-texto class="text-overflow" [classe]="column.class" [ngClass]=" column.transformClass ?  column?.transformClass(
+                  verificaCaminho(data, column.variavel)
+                ) : undefined" [texto]="
+                tranformar(
+                  verificaCaminho(data, column.variavel),
+                  column.pipe,
+                  column.tranform
+                )
+              "></app-copiar-texto>
+          }
+
+          @case("botao"){
+          <div class="flex  w-full gap-6">
+            <button *ngFor="let botao of column.botoes" (click)="
+                acaoTabela.emit({
+                  item: verificaCaminho(data, column.variavel),
+                  action: botao.action!
+                })
+              " [ngClass]="botao.classe" class="flex justify-center items-center gap-0.5">
+              <i [ngClass]="botao?.icon" class=" ph-duotone transition-all duration-300"> </i>
+              <span>
+                {{ botao?.label }}
+              </span>
+            </button>
+          </div>
+          }
+          }
+        </td>
+
+        } }
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
+} @if(!data?.content || data.content.length === 0){
+<div class="mt-7 text-xl text-gray-2 text-center opacity-50 h-[20rem] flex justify-center items-center">
+  <span>{{ "Não há dados para visualizar" }}</span>
+</div>
+}
+
+<p-overlayPanel #op>
+  <div class="flex flex-col gap-1 backdrop-blur-xl  px-4 py-2 rounded-xl card">
+    @for(item of menuAction; track $index){
+
+    @if( !item.condicional ||
+    item.condicional.condicao ===
+    verificaCaminho(itemSelecionado, item.condicional.variavel)){
+    <button class="mt-1 flex items-center  h-full w-full" (click)="
+              acaoTabela.emit({item: itemSelecionado, action:
+                item.action}
+              ); op.hide()
+            ">
+      <div
+        class="gap-2 items-center text-gray-3 font-light hover:text-primary-color-3 flex transition-all duration-300">
+        <i class="ph-duotone {{ item.icon }} text-lg "></i>
+        <span class="">{{ item.name}}</span>
+      </div>
+    </button>
+    }
+
+    }
+  </div>
+</p-overlayPanel>

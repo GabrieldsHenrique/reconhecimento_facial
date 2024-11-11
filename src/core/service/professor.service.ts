@@ -19,6 +19,24 @@ export class ProfessorService {
       'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.post(`/api/teachers`, body);
+    return this.http.post(`/api/teachers`, body, {headers});
+  }
+
+  buscar(id: number){
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    return this.http.get(`/api/teachers/${id}`, {headers});
+  }
+
+  buscarTodos(){
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    return this.http.get<UsuarioDTO[]>(`/api/teachers`, {headers});
   }
 }

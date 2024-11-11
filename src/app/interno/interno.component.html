@@ -1,1 +1,82 @@
-<p>interno works!</p>
+@if(pages){
+<div
+  class="w-screen h-screen flex  bg-gradient-to-b overflow-x-hidden  from-slate-200/70 from-40%  to-primary-color-2/20 relative  gap-14 externo text-gray-3">
+  <div class="absolute opacity-10 z-[5] top-0 left-0 h-[20rem] w-[20rem] bg-primary-color blur-3xl rounded-full"></div>
+  <div class="absolute opacity-10 z-[5] bottom-0 left-1/2 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full">
+  </div>
+  <div class="absolute opacity-10 z-[5] top-10 right-24 h-[15rem] w-[15rem] bg-primary-color blur-3xl rounded-full">
+  </div>
+  <div class="absolute opacity-10 z-[5] bottom-0 left-1/2 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full">
+  </div>
+  <div class="absolute opacity-10 z-[5] bottom-10 left-10 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full">
+  </div>
+
+  <div class="w-full  flex flex-col gap-4 animacao rounded-xl relative z-10">
+
+    <div class=" w-full flex items-center justify-between py-2 px-4 bg-gray-50/40 ">
+      <img src="assets/logo.png" class="h-[4rem]" alt="">
+      <div (click)="menuPerfil = false;"
+        class="col-span-6 flex items-center justify-center overflow-x-auto shadow-none pb-0.5">
+        <div
+          class="card bg-gray-1/40 rounded-full shadow-none h-full py-1.5  transition-all  flex items-center gap-4 px-2  ">
+          @for (page of pages; track $index ) {
+
+          <button tooltipPosition="bottom" [routerLink]="'/interno' + page.rota"
+            [ngClass]="router.url.includes(page.rota) ? ' text-primary-color-3  border-primary-color-3/40 ' : ' border-slate-200 opacity-70'"
+            class="relative card shadow-lg   rounded-full px-1 pr-2 flex {{router.url.includes(page.rota) ? page.widht : 'w-10'}} {{page.animacao}}  items-center  hover:border-primary-color-3/40  overflow-hidden hover:opacity-100 hover:text-primary-color-3  transition-all text-sm  uppercase  h-[2.4rem] duration-500 ">
+
+            <i class="ph-duotone {{page.icon}} text-[1.5rem] mr-1 ml-[0.16rem]"></i>
+            <span class="text-overflow text-[0.84rem] font-medium ">{{page.label}}</span>
+          </button>
+          }
+
+
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center gap-4">
+
+        <div (click)="menuPerfil = !menuPerfil;" class="relative">
+          <button pTooltip="Meu Perfil"
+            [ngClass]="menuPerfil ? 'w-[2.3rem] h-[2.3rem] left-8 p-1 border top-10' : 'w-0 h-0 left-4 top-0 p-0 border-0'"
+            class="absolute text-overflow   transition-all duration-300 delay-150  flex justify-center items-center card   rounded-full  shadow-md  ">
+            <i class="ph-duotone ph-user-circle hover:text-primary-color transition-all duration-200 text-3xl"></i>
+          </button>
+
+          <button [routerLink]="'/login'" tooltipPosition="left" pTooltip="Sair"
+            [ngClass]="menuPerfil ? 'w-[2.15rem] h-[2.15rem] -left-1.5 p-1 border top-12' : 'w-0 h-0 left-4 top-0 p-0 border-0'"
+            class="absolute text-overflow   transition-all duration-300 delay-300  flex justify-center items-center card   rounded-full  shadow-md  ">
+            <i class="ph-duotone ph-sign-out hover:text-primary-color transition-all duration-200 text-[1.6rem]"></i>
+          </button>
+
+          <button
+            class="rounded-full z-10 border border-primary-color-3 bg-primary-color/15 h-[2.9rem] min-w-[2.9rem] w-[2.9rem] text-[1.4rem] flex justify-center items-center">
+            <span class="w-full text-overflow font-semibold text-gray-3/90">
+              {{utilService.criaIcone('Gabriel Henrique')}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 overflow-auto mb-5 px-5">
+      <div class="flex items-center gap-4 w-full border-b border-gray-3/10 pb-1 cursor-pointer ">
+        <i
+          class="ph-duotone ph-arrow-circle-left {{paginaAtual()?.rota?.includes(router.url.split('/')[router.url.split('/').length - 1]) ? 'hidden' : 'flex'}} text-5xl hover:text-primary-color transition-all duration-200"></i>
+        <div class="flex flex-col ">
+          <h1 class="text-[2.6rem] font-semibold">{{paginaAtual()?.labelSecondary ?
+            paginaAtual()?.labelSecondary :
+            paginaAtual()?.label}}</h1>
+          <p class="opacity-70 font-light -mt-3">{{paginaAtual()?.descricao}}</p>
+        </div>
+      </div>
+
+
+      <div (mouseenter)="menuPerfil = false;" class="w-full h-full transition-all delay-300 ease-in-out -mt-1 ">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+}

@@ -1,0 +1,6 @@
+<div class="flex flex-col w-full min-h-full animacao gap-6">
+  <app-generic-calendar class=" w-full h-full" nomeBotaoNavegacao="Novo Professor" (navegacao)="novo($event)" ></app-generic-calendar>
+
+  <app-generic-table [columns]="columns" [menuAction]="menuAction" [data]="data" [rows]="10"></app-generic-table>
+
+</div>

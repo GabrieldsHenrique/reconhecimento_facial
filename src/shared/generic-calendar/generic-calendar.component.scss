@@ -1,0 +1,12 @@
+@keyframes balanco {
+    0% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(5deg);
+    }
+}
+
+.balanco {
+    animation: balanco 0.4s ease-in-out infinite alternate;
+}

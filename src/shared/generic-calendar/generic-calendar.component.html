@@ -1,0 +1,41 @@
+<main [ngClass]="card ? 'card p-5' : ''" class="flex flex-col gap-5 w-full">
+   @if(calendario){
+    <div class="flex gap-4 w-full">
+        <div
+            class="flex items-center justify-center gap-2 bg-primary-color/10 border border-primary-color-3 rounded-xl p-2  w-[7.5rem]">
+            <i class="ph-fill ph-caret-left cursor-pointer" (click)="alterarAno('subtrair')"></i>
+            <span>{{anoAtual}}</span>
+            <i class=" ph-fill ph-caret-right cursor-pointer" (click)="alterarAno('adicionar')"></i>
+        </div>
+
+        <div class="flex w-full gap-4 overflow-x-auto py-0.5">
+            @for (mes of meses; track $index) {
+            <button (click)="mesAtual = $index; this.criarData()"
+                [ngClass]="mesAtual === $index ? 'bg-primary-color/10 border-primary-color-3 ' : 'bg-gray-1/20 border-gray-1'"
+                class="flex items-center justify-center border gap-2  rounded-xl p-2  w-full transition-all hover:border-primary-color-3 hover:bg-primary-color/10 duration-200">
+                <span class="w-full text-overflow">{{mes.nome}}</span>
+            </button>
+            }
+        </div>
+    </div>
+   }
+
+    <div class="flex gap-4 ">
+        <span class="p-float-label w-full">
+            <input id="buscar" type="text" pInputText />
+            <label for="buscar" class=" text-gray-3">{{ "Buscar" }}</label>
+        </span>
+
+        @if(nomeBotaoNavegacao){
+        <button (click)="navegacao.emit()" class="primary-button px-4"> <i class="ph-duotone ph-plus-circle text-xl"></i> <span
+                class="text-overflow">{{nomeBotaoNavegacao}}</span></button>
+        }
+        <button [disabled]="!filtrar" (click)="filtro.emit()" class="secondary-button px-4">
+             <i class="ph-duotone ph-funnel text-xl"></i>
+             <span class="text-overflow">Filtrar</span>
+        </button>
+
+
+    </div>
+
+</main>

@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CampoComponent } from '../../../shared/formulario/campo/campo.component';
 import { LoginComponentService } from './login.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormularioLoginSimples } from '../../../core/formularios/login/formularioLogin.model';
 
 @Component({
@@ -14,13 +14,14 @@ import { FormularioLoginSimples } from '../../../core/formularios/login/formular
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  loginComponentService = inject(LoginComponentService)
+  loginComponentService = inject(LoginComponentService);
+  router = inject(Router)
 
   form = this.loginComponentService.gerarForm()
 
   estrutura = FormularioLoginSimples
 
   login(){
-
+    this.router.navigateByUrl('/interno/admin/professores')
   }
 }

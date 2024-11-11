@@ -1,6 +1,6 @@
 {
   "/api/**": {
-    "target": "https://2b0b-186-250-206-173.ngrok-free.app",
+    "target": "https://a32c-186-250-206-173.ngrok-free.app",
     "secure": false,
     "pathRewrite": {
       "^/api": ""
