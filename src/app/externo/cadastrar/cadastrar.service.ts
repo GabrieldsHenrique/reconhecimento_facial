@@ -12,13 +12,14 @@ export class CadastrarComponentService {
 
   gerarForm() {
     return this.formBuilder.group({
-      nome: ["", [Validators.required]],
-      dataNascimento: ["", [Validators.required]],
-      // cpf: ["", [Validators.required]],
+      name: ["", [Validators.required]],
+      dateBirth: ["", [Validators.required]],
+      cpf: ["", [Validators.required]],
+      tipoUsuario : ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
-      telefone: ["", [Validators.required]],
-      senha: ["", [Validators.required]],
-      confirmarSenha: ["", [Validators.required]],
+      cellphone: ["", [Validators.required]],
+      password: ["", [Validators.required]],
+      confirmPassword: ["", [Validators.required]],
     });
   }
 }

@@ -1,11 +1,14 @@
+import { ProfessorService } from './../../../core/service/professor.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { CampoComponent } from '../../../shared/formulario/campo/campo.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UtilService } from '../../../core/service/util.service';
 import { CadastrarComponentService } from './cadastrar.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormularioCadastro } from '../../../core/formularios/cadastro-usuario/formularioCadastro.model';
+import { UsuarioDTO } from '../../../core/dto/usuario.dto';
+import { AlunoService } from '../../../core/service/aluno.service';
 
 interface VerificacoesSenha {
   [key: string]: boolean;
@@ -27,7 +30,10 @@ interface VerificacoesSenha {
 })
 export class CadastrarComponent {
   utilService= inject(UtilService)
-  cadastrarComponentService = inject(CadastrarComponentService)
+  cadastrarComponentService = inject(CadastrarComponentService);
+  professorService = inject(ProfessorService);
+  alunoService = inject(AlunoService)
+  router =inject(Router)
 
   form = this.cadastrarComponentService.gerarForm()
 
@@ -44,7 +50,7 @@ export class CadastrarComponent {
   };
 
   constructor() {
-    this.form.controls.senha.valueChanges.subscribe((response) => {
+    this.form.controls.password.valueChanges.subscribe((response) => {
       if (response && response.length > 0) {
         this.validarSenha.verificarSenha = true;
         this.validarSenha.oitoCaracteres = response.length > 8 ? true : false;
@@ -55,7 +61,7 @@ export class CadastrarComponent {
         this.validarSenha.letraMinuscula = /[a-z]/.test(response);
         this.validarSenha.numero = /\d/.test(response);
         this.validarSenha.naoCoincidem =
-          response === this.form.controls.confirmarSenha.value ? true : false;
+          response === this.form.controls.confirmPassword.value ? true : false;
       } else {
         this.validarSenha.verificarSenha = false;
       }
@@ -63,9 +69,9 @@ export class CadastrarComponent {
       this.validaForm();
     });
 
-    this.form.controls.confirmarSenha.valueChanges.subscribe((response) => {
+    this.form.controls.confirmPassword.valueChanges.subscribe((response) => {
       this.validarSenha.naoCoincidem =
-        response === this.form.controls.senha.value ? true : false;
+        response === this.form.controls.password.value ? true : false;
       this.validaForm();
     });
 
@@ -80,17 +86,44 @@ export class CadastrarComponent {
     });
 
     if (!validaForm) {
-      this.form.controls.senha.setErrors({ invalido: false });
-      this.form.controls.confirmarSenha.setErrors({ invalido: false });
+      this.form.controls.password.setErrors({ invalido: false });
+      this.form.controls.confirmPassword.setErrors({ invalido: false });
     }
     if (validaForm) {
-      this.form.controls.senha.setErrors(null);
-      this.form.controls.confirmarSenha.setErrors(null);
+      this.form.controls.password.setErrors(null);
+      this.form.controls.confirmPassword.setErrors(null);
     }
   }
 
 
   cadastrar(){
+    const usuario : UsuarioDTO = {
+      name: this.form.value.name!,
+      cpf: this.form.value.cpf!,
+      email: this.form.value.email!,
+      cellphone: this.form.value.cellphone!,
+      dateBirth: this.form.value.dateBirth!,
+      password: this.form.value.password!,
+    }
+    let request$;
+
+    if(this.form.controls.tipoUsuario.value === 'PROFESSOR'){
+      request$ = this.professorService.criar(usuario);
+    } else {
+      request$ = this.alunoService.criar(usuario);
+    }
+
+      request$.subscribe(
+        {
+          next: () => {
+            this.utilService.emitNotificacao('success', 'Usuário Cadastrado com sucesso');
+            this.router.navigateByUrl('/login')
+          },
+          error: (err) => {
+            this.utilService.emitNotificacao('error',err?.error)
+          }
+        }
+      )
 
   }
 }
