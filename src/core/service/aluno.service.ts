@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ProfessorDTO } from '../dto/professor.dto';
 import { UtilService } from './util.service';
 import { UsuarioDTO } from '../dto/usuario.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlunoService {
   utilService = inject(UtilService);
@@ -22,21 +22,41 @@ export class AlunoService {
     return this.http.post(`/api/students`, body);
   }
 
-  buscar(id: number){
+  alterar(body: UsuarioDTO) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.get(`/api/students/${id}`, {headers});
+    return this.http.patch(`/api/students`, body);
   }
 
-  buscarTodos(){
+  buscar(id: number) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
       'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.get<UsuarioDTO[]>(`/api/students`, {headers});
+    return this.http.get(`/api/students/${id}`, { headers });
+  }
+
+  buscarTodos() {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    return this.http.get<UsuarioDTO[]>(`/api/students`, { headers });
+  }
+
+  deletar(id: string) {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    const params = new HttpParams().set('id', id);
+
+    return this.http.delete(`/api/students`, { params, headers });
   }
 }

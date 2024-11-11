@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UtilService } from './util.service';
 import { inject, Injectable } from '@angular/core';
 import { ProfessorDTO } from '../dto/professor.dto';
@@ -22,6 +22,15 @@ export class ProfessorService {
     return this.http.post(`/api/teachers`, body, {headers});
   }
 
+  alterar(body: UsuarioDTO) {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    return this.http.patch(`/api/teachers`, body);
+  }
+
   buscar(id: number){
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
@@ -38,5 +47,16 @@ export class ProfessorService {
     });
 
     return this.http.get<UsuarioDTO[]>(`/api/teachers`, {headers});
+  }
+
+  deletar(id: string) {
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'ngrok-skip-browser-warning': '69420',
+    });
+
+    const params = new HttpParams().set('id', id);
+
+    return this.http.delete(`/api/teachers`, { params, headers });
   }
 }

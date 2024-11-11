@@ -8,6 +8,9 @@ import {
 } from '../../../../core/dto/generic-table.dto';
 import { ProfessorService } from '../../../../core/service/professor.service';
 import { UsuarioDTO } from '../../../../core/dto/usuario.dto';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UtilService } from '../../../../core/service/util.service';
+import { ModalAlterarUsuarioComponent } from '../../modal/modal-alterar-usuario/modal-alterar-usuario.component';
 
 @Component({
   selector: 'app-professores',
@@ -15,35 +18,32 @@ import { UsuarioDTO } from '../../../../core/dto/usuario.dto';
   imports: [GenericCalendarComponent, AlunosComponent, GenericTableComponent],
   templateUrl: './professores.component.html',
   styleUrl: './professores.component.scss',
+  providers: [DialogService, DynamicDialogRef],
 })
 export class ProfessoresComponent {
   professorService = inject(ProfessorService);
+  dialogService = inject(DialogService);
+  utilService = inject(UtilService);
+  ref: DynamicDialogRef | undefined;
 
   data: { content: UsuarioDTO[] } = {
     content: [],
   };
 
   constructor() {
-    this.professorService.buscarTodos().subscribe((res) => {
-      this.data.content = res;
-    });
+    this.pesquisar();
   }
 
   menuAction: ItensAcoesDTO[] = [
     {
-      action: 'detalhes',
-      icon: 'ph-file-text',
-      name: 'Detalhes da transferência',
+      action: 'editar',
+      icon: 'ph-pencil-line',
+      name: 'Editar',
     },
     {
-      action: 'comprovante',
-      icon: 'ph-eye',
-      name: 'Comprovante da transferência',
-    },
-    {
-      action: 'reenviar',
-      icon: 'ph-paper-plane',
-      name: 'Reenviar comprovante',
+      action: 'excluir',
+      icon: 'ph-trash',
+      name: 'Excluir',
     },
   ];
 
@@ -86,5 +86,73 @@ export class ProfessoresComponent {
     },
   ];
 
-  novo(event: any) {}
+  novo(event: any) {
+    this.abrirModal();
+  }
+
+  acaoTabela(eventData: { item: any; action: string }) {
+    switch (eventData.action) {
+      case 'editar':
+        this.abrirModal(eventData.item);
+        break;
+
+      case 'excluir':
+        this.professorService.deletar(eventData.item.id!).subscribe({
+          next: () => {
+            this.utilService.emitNotificacao(
+              'success',
+              'Aluno Deletado com Sucesso'
+            ),
+              this.pesquisar();
+          },
+          error: (err) => {
+            this.utilService.emitNotificacao('error', err.error.message);
+          },
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  pesquisar() {
+    this.professorService.buscarTodos().subscribe((res) => {
+      this.data.content = res;
+    });
+  }
+
+  abrirModal(usuario?: UsuarioDTO) {
+    this.ref = this.dialogService.open(ModalAlterarUsuarioComponent, {
+      width: '40rem',
+      height: 'auto',
+      contentStyle: { overflow: 'auto' },
+      data: usuario,
+      focusOnShow: false,
+    });
+
+    let request$;
+    this.ref.onClose.subscribe((res) => {
+      if (res) {
+        if (usuario) {
+          request$ = this.professorService.alterar({ ...res, id: usuario.id });
+        } else {
+          request$ = this.professorService.criar(res);
+        }
+
+        request$.subscribe({
+          next: () => {
+            this.utilService.emitNotificacao(
+              'success',
+              'Usuário Cadastrado com sucesso'
+            );
+            this.pesquisar();
+          },
+          error: (err) => {
+            this.utilService.emitNotificacao('error', err?.error);
+          },
+        });
+      }
+    });
+  }
 }

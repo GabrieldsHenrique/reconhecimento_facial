@@ -1,0 +1,22 @@
+<div [ngClass]="(border ? 'border-b pb-1 border-gray-1' : '' )  + (posicao === 'right' ? '  justify-end ' : posicao === 'center' ? ' justify-center ' : ' justify-start' )"
+    class=" flex items-center gap-2 w-full text-overflow">
+    @if(voltar){
+    <i  [ngClass]="tamanhoTitulo"
+        class="ph-duotone ph-arrow-circle-left cursor-pointer  hover:text-primary-color transition-all duration-300"></i>
+    }
+
+    @if(icone){
+        <i [ngClass]="tamanhoTitulo" class="ph-duotone {{icone}} "></i>
+    }
+    <div [ngClass]="(posicao === 'right' ? 'items-end ' : posicao === 'center' ? 'items-center ' : 'items-start ')"
+        class="font-medium  flex flex-col text-overflow w-full">
+        @if(titulo){
+            <span  [ngClass]="(posicao === 'right' ? 'text-end ' : posicao === 'center' ? 'text-center ' : 'text-start ')+ tamanhoTitulo" class="text-overflow w-full ">
+                {{ titulo  }}
+            </span>
+        }
+        @if (descricao) {
+        <span  [ngClass]="(posicao === 'right' ? 'text-end ' : posicao === 'center' ? 'text-center ' : 'text-start ') + tamanhoDescricao" class="text-overflow text-gray-2/90 font-light w-full">{{descricao}}</span>
+        }
+    </div>
+</div>

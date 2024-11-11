@@ -5,4 +5,5 @@ export interface UsuarioDTO {
   dateBirth: string;
   cpf: string;
   cellphone: string;
+  id ?: string
 }
