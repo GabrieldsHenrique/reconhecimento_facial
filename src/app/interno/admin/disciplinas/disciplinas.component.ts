@@ -127,7 +127,8 @@ export class DisciplinasComponent implements OnInit {
 
     this.disciplinaService.buscarTodos(params).subscribe({
       next: (res) => {
-        this.data.content = res.data;
+
+        this.data.content = res.data.filter(disciplina => disciplina.teacher?.name === this.utilService.me()?.name)
         this.spinner.hide();
       },
       error: (err) => {

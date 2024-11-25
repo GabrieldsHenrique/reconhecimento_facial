@@ -34,12 +34,12 @@ ngOnInit(): void {
   if(this.utilService.me()?.identifier){
     this.pages = [
       {
-        label: "Professores",
-        rota: "/professor/professores",
-        icon: "ph-chalkboard-teacher",
-        widht: " w-[8.8rem]",
-        animacao: " hover:w-[8.8rem] ",
-        descricao: "Adicione e altere professores em sua lista.",
+        label: "Disciplinas",
+        rota: "/professor/disciplinas",
+        icon: "ph-book-bookmark",
+        widht: "w-[8rem]",
+        animacao: "hover:w-[8rem]",
+        descricao: "Adicione e altere as disciplinas em sua lista.",
       },
       {
         label: "Alunos",
@@ -50,12 +50,12 @@ ngOnInit(): void {
         descricao: "Adicione e altere alunos em sua lista.",
       },
       {
-        label: "Disciplinas",
-        rota: "/professor/disciplinas",
-        icon: "ph-book-bookmark",
-        widht: "w-[8rem]",
-        animacao: "hover:w-[8rem]",
-        descricao: "Adicione e altere as disciplinas em sua lista.",
+        label: "Professores",
+        rota: "/professor/professores",
+        icon: "ph-chalkboard-teacher",
+        widht: " w-[8.8rem]",
+        animacao: " hover:w-[8.8rem] ",
+        descricao: "Adicione e altere professores em sua lista.",
       },
       {
         label: "Cameras",
