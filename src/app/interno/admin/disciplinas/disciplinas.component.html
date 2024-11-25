@@ -1,0 +1,36 @@
+<div class="flex flex-col w-full min-h-full animacao gap-6">
+
+
+  <!-- <app-generic-calendar class=" w-full h-full" nomeBotaoNavegacao="Nova disciplina" (navegacao)="novaDisciplina($event)" ></app-generic-calendar>
+
+  <app-generic-table [columns]="columns" [menuAction]="menuAction" [data]="data" [rows]="10" (acaoTabela)="acaoTabela($event)" (pesquisar)="pesquisar($event)"></app-generic-table> -->
+
+  <div class="w-full grid grid-cols-4 gap-5">
+    <button (click)="novaDisciplina()" class="card h-[13rem] p-6 text-center items-center justify-center flex flex-col gap-1  hover:border-primary-color transition-all duration-200 hover:text-primary-color-3">
+      <i class="ph ph-plus-circle text-4xl"></i>
+      <span class="text-3xl text-center">Nova Disciplina</span>
+    </button>
+
+    @for (disciplina of data.content; track $index) {
+      <button class="card h-[13rem] p-6 text-center animacao flex flex-col justify-between hover:border-primary-color transition-all duration-200">
+        <span class="text-3xl text-center ">{{disciplina.name}}</span>
+
+        <div class="flex flex-col gap-2 mt-3 w-full">
+          <div class="flex justify-between text-sm ">
+            <span>Codigo: <span class="text-primary-color-3">{{disciplina.code}}</span></span>
+            <span>Ip Camera:  <span class="text-primary-color-3">{{disciplina.ipCamera}}</span></span>
+          </div>
+
+          <div class="flex justify-between text-sm ">
+            <span>Professor: <span class="text-primary-color-3">{{disciplina.teacher?.name}}</span></span>
+            <span>Alunos:  <span class="text-primary-color-3">{{disciplina.students?.length}}</span></span>
+          </div>
+        </div>
+
+      </button>
+    }
+
+  </div>
+
+</div>
+

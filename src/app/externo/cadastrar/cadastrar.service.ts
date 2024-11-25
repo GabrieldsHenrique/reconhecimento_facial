@@ -18,8 +18,11 @@ export class CadastrarComponentService {
       tipoUsuario : ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       cellphone: ["", [Validators.required]],
+      course: [""],
+      registration: [""],
       password: ["", [Validators.required]],
       confirmPassword: ["", [Validators.required]],
+      identifier :[""],
     });
   }
 }

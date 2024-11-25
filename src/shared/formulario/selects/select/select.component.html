@@ -10,7 +10,7 @@
       [ngModelOptions]="{standalone: true}"></p-inputSwitch>
     }
     <span class="p-float-label col-span-10 w-full">
-      <p-dropdown  appendTo="body" autoAjusteWidth [inputId]="formControlName" scrollHeight="150px" [options]="options"
+      <p-dropdown appendTo="body" autoAjusteWidth [inputId]="formControlName" scrollHeight="150px" [options]="options"
         [formControlName]="formControlName" optionLabel="label" optionValue="value">
         <ng-template  let-item pTemplate="item" >
           <div tooltipPosition="bottom" [pTooltip]="item.label" class="w-full h-full px-1 flex align-items-center gap-2">

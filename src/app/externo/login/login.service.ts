@@ -12,8 +12,8 @@ export class LoginComponentService {
 
   gerarForm() {
     return this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required]]
+      email:['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
   }
 }

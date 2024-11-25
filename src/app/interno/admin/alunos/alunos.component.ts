@@ -10,6 +10,7 @@ import { AlunoService } from '../../../../core/service/aluno.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ModalAlterarUsuarioComponent } from '../../modal/modal-alterar-usuario/modal-alterar-usuario.component';
 import { UtilService } from '../../../../core/service/util.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-alunos',
@@ -34,15 +35,20 @@ export class AlunosComponent {
   }
 
   menuAction: ItensAcoesDTO[] = [
+    // {
+    //   action: 'editar',
+    //   icon: 'ph-pencil-line',
+    //   name: 'Editar',
+    // },
+    // {
+    //   action: 'excluir',
+    //   icon: 'ph-trash',
+    //   name: 'Excluir',
+    // },
     {
-      action: 'editar',
-      icon: 'ph-pencil-line',
-      name: 'Editar',
-    },
-    {
-      action: 'excluir',
-      icon: 'ph-trash',
-      name: 'Excluir',
+      action: 'visualizar',
+      icon: 'ph-eye',
+      name: 'Visualizar',
     },
   ];
 
@@ -115,9 +121,17 @@ export class AlunosComponent {
     }
   }
 
-  pesquisar() {
-    this.alunoService.buscarTodos().subscribe((res) => {
-      this.data.content = res;
+  pesquisar(event?: HttpParams) {
+    let params = event
+    ? event
+    : this.utilService.generateParamsPage(
+        { first: 0, rows: 10 },
+      );
+
+      params = this.utilService.generateParamsFilters(params, {userType: 'aluno'})
+
+    this.alunoService.buscarTodos(params).subscribe((res) => {
+      this.data.content = res.data;
     });
   }
 

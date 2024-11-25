@@ -11,6 +11,7 @@ import { UsuarioDTO } from '../../../../core/dto/usuario.dto';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UtilService } from '../../../../core/service/util.service';
 import { ModalAlterarUsuarioComponent } from '../../modal/modal-alterar-usuario/modal-alterar-usuario.component';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-professores',
@@ -35,15 +36,20 @@ export class ProfessoresComponent {
   }
 
   menuAction: ItensAcoesDTO[] = [
+    // {
+    //   action: 'editar',
+    //   icon: 'ph-pencil-line',
+    //   name: 'Editar',
+    // },
+    // {
+    //   action: 'excluir',
+    //   icon: 'ph-trash',
+    //   name: 'Excluir',
+    // },
     {
-      action: 'editar',
-      icon: 'ph-pencil-line',
-      name: 'Editar',
-    },
-    {
-      action: 'excluir',
-      icon: 'ph-trash',
-      name: 'Excluir',
+      action: 'visualizar',
+      icon: 'ph-eye',
+      name: 'Visualizar',
     },
   ];
 
@@ -116,9 +122,17 @@ export class ProfessoresComponent {
     }
   }
 
-  pesquisar() {
-    this.professorService.buscarTodos().subscribe((res) => {
-      this.data.content = res;
+  pesquisar(event?: HttpParams ) {
+    let params = event
+    ? event
+    : this.utilService.generateParamsPage(
+        { first: 0, rows: 10 },
+      );
+
+      params = this.utilService.generateParamsFilters(params, {userType: 'professor'})
+
+    this.professorService.buscarTodos(params).subscribe((res) => {
+      this.data.content = res.data;
     });
   }
 

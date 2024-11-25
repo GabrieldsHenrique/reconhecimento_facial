@@ -1,6 +1,6 @@
 @if(pages){
 <div
-  class="w-screen h-screen flex  bg-gradient-to-b overflow-x-hidden  from-slate-200/70 from-40%  to-primary-color-2/20 relative  gap-14 externo text-gray-3">
+  class="w-screen h-screen flex  bg-gradient-to-b overflow-x-hidden  from-slate-200/70 from-40%  to-primary-color-2/20 relative  gap-14 externo text-gray-3 interno">
   <div class="absolute opacity-10 z-[5] top-0 left-0 h-[20rem] w-[20rem] bg-primary-color blur-3xl rounded-full"></div>
   <div class="absolute opacity-10 z-[5] bottom-0 left-1/2 h-[14rem] w-[14rem] bg-primary-color blur-3xl rounded-full">
   </div>
@@ -43,7 +43,7 @@
             <i class="ph-duotone ph-user-circle hover:text-primary-color transition-all duration-200 text-3xl"></i>
           </button>
 
-          <button [routerLink]="'/login'" tooltipPosition="left" pTooltip="Sair"
+          <button (click)="utilService.sair()" tooltipPosition="left" pTooltip="Sair"
             [ngClass]="menuPerfil ? 'w-[2.15rem] h-[2.15rem] -left-1.5 p-1 border top-12' : 'w-0 h-0 left-4 top-0 p-0 border-0'"
             class="absolute text-overflow   transition-all duration-300 delay-300  flex justify-center items-center card   rounded-full  shadow-md  ">
             <i class="ph-duotone ph-sign-out hover:text-primary-color transition-all duration-200 text-[1.6rem]"></i>
@@ -52,7 +52,7 @@
           <button
             class="rounded-full z-10 border border-primary-color-3 bg-primary-color/15 h-[2.9rem] min-w-[2.9rem] w-[2.9rem] text-[1.4rem] flex justify-center items-center">
             <span class="w-full text-overflow font-semibold text-gray-3/90">
-              {{utilService.criaIcone('Gabriel Henrique')}}</span>
+              {{utilService.criaIcone(utilService.me()?.name!)}}</span>
           </button>
         </div>
       </div>

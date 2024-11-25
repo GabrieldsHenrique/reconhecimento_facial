@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { UtilService } from './util.service';
 import { inject, Injectable } from '@angular/core';
 import { ProfessorDTO } from '../dto/professor.dto';
-import { UsuarioDTO } from '../dto/usuario.dto';
+import { PaginateUsuariosDTO, UsuarioDTO } from '../dto/usuario.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,47 +16,42 @@ export class ProfessorService {
   criar(body: UsuarioDTO) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.post(`/api/teachers`, body, {headers});
+    return this.http.post(`/api/users/professores`, body, {headers});
   }
 
   alterar(body: UsuarioDTO) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.patch(`/api/teachers`, body);
+    return this.http.patch(`/api/users/professores`, body);
   }
 
   buscar(id: number){
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.get(`/api/teachers/${id}`, {headers});
+    return this.http.get(`/api/users/professores/${id}`, {headers});
   }
 
-  buscarTodos(){
+  buscarTodos(params: HttpParams){
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'ngrok-skip-browser-warning': '69420',
     });
 
-    return this.http.get<UsuarioDTO[]>(`/api/teachers`, {headers});
+    return this.http.get<PaginateUsuariosDTO>(`/api/users`, {headers, params});
   }
 
   deletar(id: string) {
     const headers = new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'ngrok-skip-browser-warning': '69420',
     });
 
     const params = new HttpParams().set('id', id);
 
-    return this.http.delete(`/api/teachers`, { params, headers });
+    return this.http.delete(`/api/users/professores`, { params, headers });
   }
 }

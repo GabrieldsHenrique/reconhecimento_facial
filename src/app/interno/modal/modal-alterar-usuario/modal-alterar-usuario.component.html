@@ -1,20 +1,22 @@
-<app-generic-titulo tamanhoTitulo="text-4xl" posicao="center" [titulo]="(config.data? 'Alterar ' : 'Cadastrar ') + 'usuário'"
-[descricao]=" (config.data? 'Altera as informações do usuário.' : 'Adicione um novo usuario') "></app-generic-titulo>
+<div class="animacao">
+  <app-generic-titulo tamanhoTitulo="text-4xl" posicao="center" [titulo]="(config.data? 'Alterar ' : 'Cadastrar ') + 'usuário'"
+  [descricao]=" (config.data? 'Altere as informações do usuário.' : 'Adicione um novo usuario') "></app-generic-titulo>
 
-<form [formGroup]="form" class="w-full gap-4 teste">
-  @for(linha of estrutura; track $index ){
-  <div [class]="linha.className">
-    @for(campo of linha.linha; track $index ){
-    <div [class]="campo.className">
-      <app-campo [type]="campo.type" [formControlName]="campo.formControlName" [placeholder]="campo.placeholder"
-        [form]="form" [options]="campo.options" [mask]="campo.mask" [label]="campo.label"></app-campo>
+  <form [formGroup]="form" class="w-full gap-4 teste">
+    @for(linha of estrutura; track $index ){
+    <div [class]="linha.className">
+      @for(campo of linha.linha; track $index ){
+      <div [class]="campo.className">
+        <app-campo [type]="campo.type" [formControlName]="campo.formControlName" [placeholder]="campo.placeholder"
+          [form]="form" [options]="campo.options" [mask]="campo.mask" [label]="campo.label"></app-campo>
+      </div>
+      }
     </div>
     }
-  </div>
-  }
-</form>
+  </form>
 
-<div class="flex items-center justify-center gap-4 mt-5 border-t pt-3 text-lg">
-  <button class="secondary-button px-3 py-2" (click)="ref.close()">Cancelar</button>
-  <button class="primary-button px-3 py-2" [disabled]="form.invalid" (click)="confirmar()">Confimar</button>
+  <div class="flex items-center justify-center gap-4 mt-5 border-t pt-3 text-lg">
+    <button class="secondary-button px-3 py-2" (click)="ref.close()">Cancelar</button>
+    <button class="primary-button px-3 py-2" [disabled]="form.invalid" (click)="confirmar()">Confimar</button>
+  </div>
 </div>

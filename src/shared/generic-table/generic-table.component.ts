@@ -139,8 +139,6 @@ export class GenericTableComponent {
     this.pesquisar.emit(
       this.utilService.generateParamsPage(
         event,
-        this.inicialSort.sortOrders,
-        this.inicialSort.sortProperties
       )
     );
   }

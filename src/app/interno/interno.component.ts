@@ -31,10 +31,11 @@ export class InternoComponent implements OnInit{
   pages :PageDTO[] = [ ];
 
 ngOnInit(): void {
+  if(this.utilService.me()?.identifier){
     this.pages = [
       {
         label: "Professores",
-        rota: "/admin/professores",
+        rota: "/professor/professores",
         icon: "ph-chalkboard-teacher",
         widht: " w-[8.8rem]",
         animacao: " hover:w-[8.8rem] ",
@@ -42,15 +43,23 @@ ngOnInit(): void {
       },
       {
         label: "Alunos",
-        rota: "/admin/alunos",
+        rota: "/professor/alunos",
         icon: "ph-student",
         widht: " w-[6.4rem] ",
         animacao: " hover:w-[6.4rem] ",
         descricao: "Adicione e altere alunos em sua lista.",
       },
       {
+        label: "Disciplinas",
+        rota: "/professor/disciplinas",
+        icon: "ph-book-bookmark",
+        widht: "w-[8rem]",
+        animacao: "hover:w-[8rem]",
+        descricao: "Adicione e altere as disciplinas em sua lista.",
+      },
+      {
         label: "Cameras",
-        rota: "/admin/cameras",
+        rota: "/professor/cameras",
         icon: "ph-camera",
         widht: " w-[7rem] ",
         animacao: " hover:w-[7rem] ",
@@ -58,13 +67,35 @@ ngOnInit(): void {
       },
       {
         label: "Salas",
-        rota: "/admin/salas",
+        rota: "/professor/salas",
         icon: "ph-chalkboard",
         widht: "w-[5.5rem]",
         animacao: "hover:w-[5.5rem]",
         descricao: "Adicione e altere as salas em sua lista.",
       },
+
     ]
+  }else{
+    this.pages = [
+      {
+        label: "Disciplinas",
+        rota: "/aluno/disciplinas",
+        icon: "ph-book-bookmark",
+        widht: "w-[8rem]",
+        animacao: "hover:w-[8rem]",
+        descricao: "Adicione e altere as disciplinas em sua lista.",
+      },
+      {
+        label: "Minhas disciplinas",
+        rota: "/aluno/minhas-disciplinas",
+        icon: "ph-bookmarks",
+        widht: "w-[11.5rem]",
+        animacao: "hover:w-[11.5rem]",
+        descricao: "Adicione e altere as disciplinas em sua lista.",
+      },
+    ]
+  }
+
 }
 
   paginaAtual() : PageDTO | undefined{

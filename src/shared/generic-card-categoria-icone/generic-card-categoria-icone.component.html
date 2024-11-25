@@ -1,0 +1,15 @@
+<div class="flex gap-5 text-gray-3">
+  @for (card of cards; track $index) {
+    <button (click)="alterarOpcao.emit(card.opcao)"
+      [ngClass]="opcao === card.opcao ? ' border-primary-color opacity-100'  : ' opacity-60'"
+      class="rounded-3xl card  shadow-xl border-2 hover:opacity-100 hover:border-primary-color transition-all duration-300 flex flex-col justify-between h-[16rem] w-[16rem] items-center p-6">
+      <span class="text-xl font-medium text-center">{{card.nome}}</span>
+      <i [ngClass]=" opcao === card.opcao   ? 'scale-110 text-primary-color' : 'scale-100'"
+      class="text-[6.4rem] transition-all ph {{card.icone}} duration-300"></i>
+      <span class="text-center text-sm font-light">
+          {{card.descricao}}
+      </span>
+  </button>
+  }
+
+</div>

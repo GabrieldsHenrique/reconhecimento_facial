@@ -1,0 +1,41 @@
+<div class="flex flex-col w-full min-h-full animacao gap-6">
+
+
+   <app-generic-calendar class=" w-full h-full mt-3" [card]="false" [calendario]="false" ></app-generic-calendar>
+
+
+  <div class="w-full grid grid-cols-4 gap-4">
+    @for (disciplina of data.content; track $index) {
+      <button class="card h-[15rem] p-6 text-center animacao flex flex-col justify-between hover:border-primary-color transition-all duration-200">
+        <span class="text-3xl text-center ">{{disciplina.name}}</span>
+
+        <div class="flex flex-col gap-2 mt-3 w-full">
+          <div class="flex justify-between text-sm ">
+            <span>Codigo: <span class="text-primary-color-3">{{disciplina.code}}</span></span>
+            <span>Ip Camera:  <span class="text-primary-color-3">{{disciplina.ipCamera}}</span></span>
+          </div>
+
+          <div class="flex justify-between text-sm ">
+            <span>Professor: <span class="text-primary-color-3">{{disciplina.teacher?.name}}</span></span>
+            <span>Alunos:  <span class="text-primary-color-3">{{disciplina.students?.length}}</span></span>
+          </div>
+          @if(!verificaInscricao(disciplina)){
+            <div class="text-xs w-full flex justify-center">
+              <button (click)="inscrever(disciplina.id!)" class="primary-button  py-0.5 w-[6.5rem]"><i class="ph-bold ph-play-circle text-base"></i> Inscrever</button>
+            </div>
+          }@else {
+            <div class="text-xs w-full flex justify-center">
+              <button  class="secondary-button  py-0.5 w-[6.5rem]"><i class="ph-bold ph-play-circle text-base"></i> Inscrito</button>
+            </div>
+          }
+
+
+        </div>
+
+      </button>
+    }
+
+  </div>
+
+</div>
+

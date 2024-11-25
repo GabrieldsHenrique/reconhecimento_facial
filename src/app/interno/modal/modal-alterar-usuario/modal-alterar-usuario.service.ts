@@ -14,7 +14,7 @@ export class ModalAlterarUsuarioService {
   gerarForm(usuario ? : UsuarioDTO) {
     return this.formBuilder.group({
       name: [usuario?.name, [Validators.required]],
-      dateBirth: [usuario?.dateBirth, [Validators.required]],
+      dateBirth: [usuario?.dateBirth ? new Date(usuario?.dateBirth) : undefined, [Validators.required]],
       cpf: [usuario?.cpf, [Validators.required]],
       email: [usuario?.email, [Validators.required, Validators.email]],
       cellphone: [usuario?.cellphone, [Validators.required]],

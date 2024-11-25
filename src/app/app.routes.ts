@@ -1,17 +1,22 @@
+import { AlunoGuard } from '../core/guard/aluno.guard';
+import { NotAuthGuard } from '../core/guard/notAuth.guard';
+import { ProfessorGuard } from '../core/guard/professor.guard';
+import { AuthGuard } from './../core/guard/auth.guard';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
   {
     path: 'interno',
+    canMatch: [AuthGuard],
     loadComponent: () =>
       import('../app/interno/interno.component').then(
         (m) => m.InternoComponent
       ),
-
       children: [
         {
-          path: 'admin',
+          path: 'professor',
+          canMatch: [ProfessorGuard],
           children: [
             {
               path: 'professores',
@@ -35,6 +40,13 @@ export const routes: Routes = [
                 ),
             },
             {
+              path: 'disciplinas',
+              loadComponent: () =>
+                import("../app/interno/admin/disciplinas/disciplinas.component").then(
+                  (m) => m.DisciplinasComponent
+                ),
+            },
+            {
               path: 'salas',
               loadComponent: () =>
                 import("../app/interno/admin/salas/salas.component").then(
@@ -42,11 +54,32 @@ export const routes: Routes = [
                 ),
             }
           ]
+        },
+        {
+          path: 'aluno',
+          canMatch: [AlunoGuard],
+          children: [
+            {
+              path: 'disciplinas',
+              loadComponent: () =>
+                import("../app/interno/aluno/disciplinas/disciplinas.component").then(
+                  (m) => m.DisciplinasComponent
+                ),
+            },
+            {
+              path: 'minhas-disciplinas',
+              loadComponent: () =>
+                import("../app/interno/aluno/minhas-disciplinas/minhas-disciplinas.component").then(
+                  (m) => m.MinhasDisciplinasComponent
+                ),
+            },
+          ]
         }
       ]
   },
   {
     path: '',
+    canMatch: [NotAuthGuard],
     loadComponent: () =>
       import('../app/externo/externo.component').then(
         (m) => m.ExternoComponent
@@ -58,7 +91,7 @@ export const routes: Routes = [
           import('../app/externo/login/login.component').then(
             (m) => m.LoginComponent
           ),
-        // canMatch: [NotAuthGuard],
+
       },
       {
         path: 'cadastrar',
@@ -66,7 +99,6 @@ export const routes: Routes = [
           import('../app/externo/cadastrar/cadastrar.component').then(
             (m) => m.CadastrarComponent
           ),
-        // canMatch: [NotAuthGuard],
       },
       {
         path: '**',

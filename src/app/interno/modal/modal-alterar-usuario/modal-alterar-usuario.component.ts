@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { GenericTituloComponent } from "../../../../shared/generic-titulo/generic-titulo.component";
-import { FormularioCadastro, FormularioSimplesCadastro } from '../../../../core/formularios/cadastro-usuario/formularioCadastro.model';
+import { FormularioSimplesCadastro } from '../../../../core/formularios/cadastro-usuario/formularioCadastro.model';
 import { ModalAlterarUsuarioService } from './modal-alterar-usuario.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CampoComponent } from '../../../../shared/formulario/campo/campo.component';

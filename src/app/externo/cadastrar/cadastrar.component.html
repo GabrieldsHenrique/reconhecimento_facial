@@ -1,54 +1,63 @@
 
 <div
-class="w-full gap-4 h-full  animacao flex flex-col items-center ">
+class="w-full gap-4 min-h-full  animacao flex flex-col items-center justify-between">
   <div class="flex flex-col justify-center items-center">
     <span class="text-center font-semibold text-[2.8rem] mb-[-10px] lg:mb-0 lg:text-6xl 4xl:text-7xl text-gray-3">{{ "Cadastro" }}</span>
     <span class="text-base lg:text-lg 4xl:text-xl text-gray-3">{{ "Já possui uma conta?" }}
       <span role="button" [routerLink]="'/login'" class="text-primary-color font-medium">{{ "Acesse aqui" }}</span></span>
   </div>
 
-  <form [formGroup]="form" class="w-full gap-4 teste">
-    @for(linha of estrutura; track $index ){
-    <div [class]="linha.className">
-      @for(campo of linha.linha; track $index ){
-      <div [class]="campo.className">
-        <app-campo [type]="campo.type" [formControlName]="campo.formControlName" [placeholder]="campo.placeholder"
-          [form]="form" [options]="campo.options" [mask]="campo.mask" [label]="campo.label"></app-campo>
+  @if(form.controls.tipoUsuario.valid){
+    <form [formGroup]="form" class="w-full gap-4 teste animacao">
+      @for(linha of form.value.tipoUsuario === 'ALUNO' ? estruturaAluno : estruturaProfessor; track $index ){
+      <div [class]="linha.className">
+        @for(campo of linha.linha; track $index ){
+        <div [class]="campo.className">
+          <app-campo [type]="campo.type" [formControlName]="campo.formControlName" [placeholder]="campo.placeholder"
+            [form]="form" [options]="campo.options" [mask]="campo.mask" [label]="campo.label"></app-campo>
+        </div>
+        }
       </div>
       }
+    </form>
+
+    <div
+      class="transition-all duration-300 font-semibold gap-x-4 grid grid-cols-2 justify-start overflow-hidden lg:text-start text-xs  text-center"
+      [ngClass]="validarSenha.verificarSenha ? 'h-20 w-full' : 'h-0 '">
+      <span class="transition-all " [ngClass]="
+            validarSenha.naoCoincidem ? 'text-c-success' : 'text-c-error'
+          ">* {{ "Senhas não coincidem" }}</span>
+      <span class="transition-all" [ngClass]="
+            validarSenha.oitoCaracteres ? 'text-c-success' : 'text-c-error'
+          ">* {{ "Ao menos 8 caracteres" }}</span>
+      <span class="transition-all" [ngClass]="
+            validarSenha.letraMaiuscula ? 'text-c-success' : 'text-c-error'
+          ">* {{ "Ao menos uma letra maiúscula" }}</span>
+      <span class="transition-all" [ngClass]="
+            validarSenha.letraMinuscula ? 'text-c-success' : 'text-c-error'
+          ">* {{ "Ao menos uma letra minúscula" }}</span>
+      <span class="transition-all" [ngClass]="validarSenha.numero ? 'text-c-success' : 'text-c-error'">* {{ "Ao menos um número" }}</span>
+      <span class="transition-all" [ngClass]="
+            validarSenha.caracterEspecial ? 'text-c-success' : 'text-c-error'
+          ">* {{ "Ao menos um caractere especial" }}</span>
     </div>
-    }
-  </form>
 
-  <div
-    class="transition-all duration-300 font-semibold gap-x-4 grid grid-cols-2 justify-start overflow-hidden lg:text-start text-xs  text-center"
-    [ngClass]="validarSenha.verificarSenha ? 'h-20 w-full' : 'h-0 '">
-    <span class="transition-all " [ngClass]="
-          validarSenha.naoCoincidem ? 'text-c-success' : 'text-c-error'
-        ">* {{ "Senhas não coincidem" }}</span>
-    <span class="transition-all" [ngClass]="
-          validarSenha.oitoCaracteres ? 'text-c-success' : 'text-c-error'
-        ">* {{ "Ao menos 8 caracteres" }}</span>
-    <span class="transition-all" [ngClass]="
-          validarSenha.letraMaiuscula ? 'text-c-success' : 'text-c-error'
-        ">* {{ "Ao menos uma letra maiúscula" }}</span>
-    <span class="transition-all" [ngClass]="
-          validarSenha.letraMinuscula ? 'text-c-success' : 'text-c-error'
-        ">* {{ "Ao menos uma letra minúscula" }}</span>
-    <span class="transition-all" [ngClass]="validarSenha.numero ? 'text-c-success' : 'text-c-error'">* {{ "Ao menos um número" }}</span>
-    <span class="transition-all" [ngClass]="
-          validarSenha.caracterEspecial ? 'text-c-success' : 'text-c-error'
-        ">* {{ "Ao menos um caractere especial" }}</span>
-  </div>
+    <div class="w-full  3xl:text-lg 4xl:text-xl animacao">
+      <button [disabled]="form.invalid" (click)="cadastrar()"
+        class="w-full transition-all p-3 primary-button font-semibold  rounded-md">
+        <span class=" uppercase">{{ "CRIAR CONTA" }}</span>
+      </button>
+    </div>
 
-  <div class="w-full  3xl:text-lg 4xl:text-xl">
-    <button [disabled]="form.invalid" (click)="cadastrar()"
-      class="w-full transition-all p-3 primary-button font-semibold  rounded-md">
-      <span class=" uppercase">{{ "CRIAR CONTA" }}</span>
-    </button>
-  </div>
+  }@else {
+
+    <div class="flex w-full h-full items-center justify-center">
+          <app-generic-card-categoria-icone [cards]="cards" [opcao]="form.value.tipoUsuario" (alterarOpcao)="alterarOpcao($event)"></app-generic-card-categoria-icone>
+    </div>
+  }
 
 
 
   <div class="w-full flex justify-center"><img src="assets/logo.png" class="max-w-[30rem] max-h-[7rem] mt-2 drop-shadow-lg" alt="" /></div>
 </div>
+

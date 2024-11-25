@@ -21,7 +21,7 @@ export const FormularioLoginSimples: Formulario[] = [
       {
         className: "",
         type: "password",
-        formControlName: "senha",
+        formControlName: "password",
         placeholder: "Senha",
 
       },

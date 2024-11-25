@@ -96,7 +96,6 @@ button:disabled {
   @apply top-[2px] px-2 font-medium text-primary-color;
   background: linear-gradient(to top, white 56%, transparent 50%);
 }
-
 .externo {
   .p-float-label input:focus ~ label,
   .p-float-label input.p-filled ~ label,
